@@ -4,6 +4,10 @@
 
 
 
+from platform import node
+from tempfile import tempdir
+
+
 class Stack:
     '''The class represents a stack data structure'''
     def __init__(self,size=None) -> None:
@@ -13,7 +17,7 @@ class Stack:
     def push(self,data:int)->None:
         '''This method adds an element to the stack and checks if the size is specified and if the stack is full'''
         if self.size:
-            if size(self.stack_list)>=self.size:
+            if len(self.stack_list)>=self.size:
                 print("Stack Overflow")
                 return
         self.stack_list.append(data)
@@ -47,10 +51,70 @@ class Node:
     
     
 class Singly_Linked_List:
+    '''The class represents a singly linked list and encapsulates its methods'''
     def __init__(self) -> None:
         self.head=None
+    
+    def __repr__(self) -> str:
+        '''.__repr__() method returns the string representation of the linked list
+        eg:1->2->3->4->5'''
+        return '->'.join(str(i) for i in self.to_list())
+    
     def insert_beg(self,data:int)->None:
-        pass
+        '''The method inserts an element at the beginning of the linked list'''
+        new_node=Node(data)
+        if self.head:
+            new_node.next=self.head
+            self.head.next=new_node
+        else:
+            self.head=new_node
+            
+    def insert_end(self,data:int)->None:
+        '''The method inserts an element at the end of the linked list'''
+        new_node=Node(data)
+        if self.head:
+            temp=self.head
+            while temp.next:
+                temp=temp.next
+            temp.next=new_node
+        else:
+            self.head=new_node
+            
+    def to_list(self)->list:
+        '''Convert the linked list to a list by traversing the linked list'''
+        nodes=[]
+        temp=self.head
+        while temp.next:
+            nodes.append(temp.data)
+            temp=temp.next
+        return nodes
+    
+    def traverse(self)->None:
+        '''Traverse the linked list after converting to a list'''
+        for i in self.to_list():
+            print(i,end=" ")
+
+    def find(self,data:int)->bool:
+        '''The method returns True if the node is found else returns False'''
+        temp=self.head
+        while temp:
+            if temp.data==data:
+                return True
+            temp=temp.next
+        return False
+    
 if __name__ == "__main__":
-    pass
+    stack=Stack(10)
+    stack.push(1)
+    stack.push(2)
+    stack.push(3)
+    stack.push(4)
+    stack.push(5)
+    stack.push(6)
+    stack.push(7)
+    stack.push(8)
+    stack.push(9)
+    stack.push(10)
+    print(stack.pop())
+    print(stack.peek())
                 
